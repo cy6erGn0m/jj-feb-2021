@@ -1,8 +1,6 @@
-package ru.levelp;
+package org.level.web;
 
-import org.level.web.AppJPAConfiguration;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 import javax.persistence.EntityManager;
@@ -10,10 +8,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
 @Configuration
-@ComponentScan(basePackages = "org.levelp.model", excludeFilters = {
-        @ComponentScan.Filter(classes = AppJPAConfiguration.class)
-})
-public class TestConfiguration {
+public class AppJPAConfiguration {
     @Bean
     public EntityManager entityManager(EntityManagerFactory factory) {
         return factory.createEntityManager();
@@ -21,6 +16,6 @@ public class TestConfiguration {
 
     @Bean
     public EntityManagerFactory entityManagerFactory() {
-        return Persistence.createEntityManagerFactory("TestPersistenceUnit");
+        return Persistence.createEntityManagerFactory("AppPersistenceUnit");
     }
 }
