@@ -40,8 +40,24 @@ public class StartPageControllerTest {
     public void testNoParts() throws Exception {
         mvc.perform(get("/"))
                 .andExpect(status().isOk())
-                .andExpect(model().attribute("title", "Hello, MVC!"))
-                .andExpect(model().attribute("parts", Collections.emptyList()));
+                .andExpect(model().attribute("title", "Hello, anonymous!"))
+                .andExpect(model().attribute("parts", Collections.emptyList()))
+                .andExpect(model().attribute("isAdmin", false))
+                .andExpect(model().attribute("isLoggedIn", false));
+    }
+
+    @Test
+    public void testNoPartsWithLoggedInAdmin() throws Exception {
+        UserSession userSession = new UserSession();
+        userSession.setUserLogin("admin");
+        userSession.setAdmin(true);
+
+        mvc.perform(get("/").sessionAttr("user-session", userSession))
+                .andExpect(status().isOk())
+                .andExpect(model().attribute("title", "Hello, admin!"))
+                .andExpect(model().attribute("parts", Collections.emptyList()))
+                .andExpect(model().attribute("isAdmin", true))
+                .andExpect(model().attribute("isLoggedIn", true));
     }
 
     @Test
@@ -53,7 +69,7 @@ public class StartPageControllerTest {
 
         mvc.perform(get("/"))
                 .andExpect(status().isOk())
-                .andExpect(model().attribute("title", "Hello, MVC!"))
+                .andExpect(model().attribute("title", "Hello, anonymous!"))
                 .andExpect(model().attribute("parts", expectedParts));
     }
 }

@@ -7,6 +7,11 @@
 <body>
 <h1 th:text="${title}"></h1>
 
+<div th:if="${not isLoggedIn}">
+    <a href="/login">Login</a>
+<!--    <a href="/register">Register</a>-->
+</div>
+
 <table>
     <tbody th:if="${not parts.isEmpty()}">
     <th:block th:each="part : ${parts}">
@@ -24,7 +29,7 @@
     </tbody>
 </table>
 
-<form action="/add" method="post">
+<form action="/add" method="post" th:if="${isAdmin}">
     <p>
         <label>
             Part number:
