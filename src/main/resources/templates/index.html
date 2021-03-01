@@ -3,49 +3,52 @@
 <head>
     <meta charset="utf-8">
     <title th:text="${title}"></title>
+
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/4.6.0/css/bootstrap.css">
 </head>
 <body>
-<h1 th:text="${title}"></h1>
+<div class="container">
+    <h1 th:text="${title}"></h1>
 
-<div th:if="${not isLoggedIn}">
-    <a href="/login">Login</a>
-<!--    <a href="/register">Register</a>-->
-</div>
+    <div th:if="${not isLoggedIn}">
+        <a href="/login">Login</a>
+        <!--    <a href="/register">Register</a>-->
+    </div>
 
-<table>
-    <tbody th:if="${not parts.isEmpty()}">
-    <th:block th:each="part : ${parts}">
+    <table class="table table-striped">
+        <tbody th:if="${not parts.isEmpty()}">
+        <th:block th:each="part : ${parts}">
+            <tr>
+                <td th:text="${part.partNumber}"></td>
+                <td th:text="${part.title}"></td>
+            </tr>
+            <!-- test -->
+        </th:block>
+        </tbody>
+        <tbody th:if="${parts.isEmpty()}">
         <tr>
-            <td th:text="${part.partNumber}"></td>
-            <td th:text="${part.title}"></td>
+            <td>No parts found.</td>
         </tr>
-        <!-- test -->
-    </th:block>
-    </tbody>
-    <tbody th:if="${parts.isEmpty()}">
-    <tr>
-        <td>No parts found.</td>
-    </tr>
-    </tbody>
-</table>
+        </tbody>
+    </table>
 
-<form action="/add" method="post" th:if="${isAdmin}">
-    <p>
-        <label>
-            Part number:
-            <input type="text" name="partNumber">
-        </label>
-    </p>
-    <p>
-        <label>
-            Title:
-            <input type="text" name="partTitle">
-        </label>
-    </p>
-    <p>
-        <input type="submit">
-    </p>
-</form>
-
+    <form action="/add" method="post" th:if="${isAdmin}">
+        <p>
+            <label>
+                Part number:
+                <input type="text" name="partNumber">
+            </label>
+        </p>
+        <p>
+            <label>
+                Title:
+                <input type="text" name="partTitle">
+            </label>
+        </p>
+        <p>
+            <input type="submit">
+        </p>
+    </form>
+</div>
 </body>
 </html>
