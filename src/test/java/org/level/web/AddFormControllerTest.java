@@ -44,9 +44,14 @@ public class AddFormControllerTest {
         Mockito.when(parts.saveNewPart(matches("part-111"), matches("Part 1")))
                 .thenReturn(added);
 
+        UserSession userSession = new UserSession();
+        userSession.setUserLogin("admin");
+        userSession.setAdmin(true);
+
         mvc.perform(post("/add")
                 .param("partNumber", "part-111")
                 .param("partTitle", "Part 1")
+                .sessionAttr("user-session", userSession)
         )
                 .andExpect(status().isOk())
                 .andExpect(model().attribute("itemName", "Part 1"));
