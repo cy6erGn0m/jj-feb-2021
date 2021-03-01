@@ -55,4 +55,13 @@ public class PartsDAOTest {
             fail("Shouldn't pass here");
         }
     }
+
+    @Test
+    public void saveNewPart() {
+        manager.getTransaction().begin();
+        Part added = partsDAO.saveNewPart("part-1", "First part");
+        manager.getTransaction().commit();
+
+        manager.refresh(added);
+    }
 }

@@ -21,7 +21,7 @@ public class PartsDAO {
     public Part findByPartId(String partId) {
         try {
             return manager.createQuery(
-                    "from Part where partId = :id",
+                    "from Part where partNumber = :id",
                     Part.class
             ).setParameter("id", partId)
                     .getSingleResult();
@@ -51,5 +51,11 @@ public class PartsDAO {
         query.orderBy(builder.asc(fromPart.get(columnName)));
 
         return manager.createQuery(query).getResultList();
+    }
+
+    public Part saveNewPart(String partNumber, String title) {
+        Part newPart = new Part(partNumber, title);
+        manager.persist(newPart);
+        return newPart;
     }
 }

@@ -9,7 +9,7 @@ public class Part {
     private int id;
 
     @Column(unique = true, nullable = false, length = 50)
-    private String partId;
+    private String partNumber;
 
     @Column(nullable = false, length = 1000)
     private String title;
@@ -21,8 +21,8 @@ public class Part {
     public Part() {
     }
 
-    public Part(String partId, String title) {
-        this.partId = partId;
+    public Part(String partNumber, String title) {
+        this.partNumber = partNumber;
         this.title = title;
     }
 
@@ -34,12 +34,12 @@ public class Part {
         this.id = id;
     }
 
-    public String getPartId() {
-        return partId;
+    public String getPartNumber() {
+        return partNumber;
     }
 
-    public void setPartId(String partId) {
-        this.partId = partId;
+    public void setPartNumber(String partNumber) {
+        this.partNumber = partNumber;
     }
 
     public String getTitle() {

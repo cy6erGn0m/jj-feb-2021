@@ -8,18 +8,18 @@
 <h1 th:text="${title}"></h1>
 
 <table>
-    <tbody th:if="${not #lists.isEmpty(items)}">
-    <th:block th:each="item : ${items}">
+    <tbody th:if="${not parts.isEmpty()}">
+    <th:block th:each="part : ${parts}">
         <tr>
-            <td th:text="${item.id}"></td>
-            <td th:text="${item.name}"></td>
+            <td th:text="${part.partNumber}"></td>
+            <td th:text="${part.title}"></td>
         </tr>
         <!-- test -->
     </th:block>
     </tbody>
-    <tbody th:if="${#lists.isEmpty(items)}">
+    <tbody th:if="${parts.isEmpty()}">
     <tr>
-        <td>No items found.</td>
+        <td>No parts found.</td>
     </tr>
     </tbody>
 </table>
@@ -27,8 +27,14 @@
 <form action="/add" method="post">
     <p>
         <label>
-            Name:
-            <input type="text" name="itemName">
+            Part number:
+            <input type="text" name="partNumber">
+        </label>
+    </p>
+    <p>
+        <label>
+            Title:
+            <input type="text" name="partTitle">
         </label>
     </p>
     <p>
