@@ -14,7 +14,7 @@ public class Part {
 
     @Column(unique = true, nullable = false, length = 50)
     @NotBlank
-    @Pattern(regexp = "[0-9]+(-[0-9]+)*")
+//    @Pattern(regexp = "[0-9]+(-[0-9]+)*")
     private String partNumber;
 
     @Column(nullable = false, length = 1000)

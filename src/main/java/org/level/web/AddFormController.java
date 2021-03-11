@@ -1,6 +1,5 @@
 package org.level.web;
 
-import org.hibernate.exception.ConstraintViolationException;
 import org.levelp.model.Part;
 import org.levelp.model.PartsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,18 +18,17 @@ public class AddFormController {
     private PartsRepository parts;
 
     @GetMapping("/add")
-    public String add(
+    public String viewAddForm(
             Model model,
-            AddPartForm partForm,
+            @ModelAttribute("partForm") AddPartForm partForm,
             BindingResult bindingResult) {
         return "addPart";
     }
 
     @PostMapping("/add")
-    @Transactional
     public String add(
             Model model,
-            @Valid AddPartForm partForm,
+            @Valid @ModelAttribute("partForm") AddPartForm partForm,
             @ModelAttribute("user-session") UserSession session,
             BindingResult bindingResult
     ) {
@@ -45,7 +43,7 @@ public class AddFormController {
         Part added;
         try {
             added = parts.saveNewPart(partForm.getPartNumber(), partForm.getPartTitle());
-        } catch (ConstraintViolationException constraint) {
+        } catch (Throwable constraint) {
             bindingResult.addError(new FieldError("form", "partNumber", "partNumber is already used"));
             return "addPart";
         }
