@@ -5,6 +5,7 @@
     <title th:text="${title}"></title>
 
     <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/4.6.0/css/bootstrap.css">
+    <script type="text/javascript" src="/main.js"></script>
 </head>
 <body>
 <div class="container">
@@ -21,6 +22,7 @@
             <tr>
                 <td th:text="${part.partNumber}"></td>
                 <td th:text="${part.title}"></td>
+                <td><a href="#" onclick="loadPart(2)">Info</a></td>
             </tr>
             <!-- test -->
         </th:block>
@@ -31,6 +33,8 @@
         </tr>
         </tbody>
     </table>
+
+    <div id="partInfo"></div>
 
     <a href="/add" th:if="${isAdmin}">Add part...</a>
 </div>

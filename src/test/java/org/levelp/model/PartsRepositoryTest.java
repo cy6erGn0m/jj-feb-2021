@@ -4,17 +4,13 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Import;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.transaction.PlatformTransactionManager;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
 import ru.levelp.TestConfiguration;
 
@@ -54,7 +50,7 @@ public class PartsRepositoryTest {
 
     @Test
     public void findByStorageTitleWithPaging() {
-        Page<Part> page = partsRepository.findByStorageTitle("test-storage",
+        Page<Part> page = partsRepository.findByStorageTitlePaging("test-storage",
                 PageRequest.of(1, 100)
         );
 
