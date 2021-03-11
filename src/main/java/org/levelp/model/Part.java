@@ -1,6 +1,10 @@
 package org.levelp.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.PositiveOrZero;
 
 @Entity
 public class Part {
@@ -9,10 +13,16 @@ public class Part {
     private int id;
 
     @Column(unique = true, nullable = false, length = 50)
+    @NotBlank
+    @Pattern(regexp = "[0-9]+(-[0-9]+)*")
     private String partNumber;
 
     @Column(nullable = false, length = 1000)
+    @NotBlank
     private String title;
+
+//    @PositiveOrZero
+//    private int remaining;
 
     @ManyToOne
     @JoinColumn(name = "storage_fk")

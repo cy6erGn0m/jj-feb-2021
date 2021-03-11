@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<form action="/add" method="post" th:object="${partForm}">
+    <p>
+        <label>
+            Part number:
+            <input type="text" th:field="*{partNumber}">
+        </label>
+
+        <span th:if="${#fields.hasErrors('partNumber')}"
+              th:errors="*{partNumber}"></span>
+    </p>
+    <p>
+        <label>
+            Title:
+            <input type="text" th:field="*{partTitle}">
+        </label>
+
+        <span th:if="${#fields.hasErrors('partTitle')}"
+              th:errors="*{partTitle}"></span>
+    </p>
+    <p>
+        <input type="submit">
+    </p>
+</form>
+</body>
+</html>

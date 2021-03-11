@@ -32,23 +32,7 @@
         </tbody>
     </table>
 
-    <form action="/add" method="post" th:if="${isAdmin}">
-        <p>
-            <label>
-                Part number:
-                <input type="text" name="partNumber">
-            </label>
-        </p>
-        <p>
-            <label>
-                Title:
-                <input type="text" name="partTitle">
-            </label>
-        </p>
-        <p>
-            <input type="submit">
-        </p>
-    </form>
+    <a href="/add" th:if="${isAdmin}">Add part...</a>
 </div>
 </body>
 </html>
