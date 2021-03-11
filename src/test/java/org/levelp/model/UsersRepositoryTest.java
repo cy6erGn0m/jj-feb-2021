@@ -4,12 +4,13 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
 import ru.levelp.TestConfiguration;
 
-import javax.persistence.EntityManager;
 import java.util.Date;
 import java.util.List;
 
@@ -18,12 +19,10 @@ import static org.junit.Assert.*;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = TestConfiguration.class)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
-public class UsersDAOTest {
+@SpringBootTest
+public class UsersRepositoryTest {
     @Autowired
-    private EntityManager manager;
-
-    @Autowired
-    private UsersDAO usersDAO;
+    private UsersRepository usersRepository;
 
     private Date now = new Date();
 
@@ -31,26 +30,24 @@ public class UsersDAOTest {
     public void configure() {
         User newUser = new User("login777", "pass", false);
         newUser.setBirthDate(now);
-        manager.getTransaction().begin();
-        manager.persist(newUser);
-        manager.getTransaction().commit();
+        usersRepository.save(newUser);
     }
 
     @Test
     public void findByLogin() {
-        assertNull(usersDAO.findByLogin("non existing user"));
+        assertNull(usersRepository.findByLogin("non existing user"));
 
-        User found = usersDAO.findByLogin("login777");
+        User found = usersRepository.findByLogin("login777");
         assertNotNull(found);
         assertEquals("login777", found.getLogin());
     }
 
     @Test
     public void findByLoginAndPassword() {
-        assertNull(usersDAO.findByLoginAndPassword("some user", "ppp"));
-        assertNull(usersDAO.findByLoginAndPassword("login777", "pass1"));
+        assertNull(usersRepository.findByLoginAndPassword("some user", "ppp"));
+        assertNull(usersRepository.findByLoginAndPassword("login777", "pass1"));
 
-        User found = usersDAO.findByLoginAndPassword("login777", "pass");
+        User found = usersRepository.findByLoginAndPassword("login777", "pass");
         assertNotNull(found);
         assertEquals("login777", found.getLogin());
         assertEquals("pass", found.getPassword());
@@ -58,18 +55,18 @@ public class UsersDAOTest {
 
     @Test
     public void findByBirthDate() {
-        List<User> foundByNow = usersDAO.findByBirthDate(now);
+        List<User> foundByNow = usersRepository.findByBirthDateIsBefore(now);
         assertEquals(1, foundByNow.size());
         assertEquals("login777", foundByNow.get(0).getLogin());
 
         Date dateBefore = new Date(now.getTime() - 100000000);
-        List<User> foundBefore = usersDAO.findByBirthDate(dateBefore);
+        List<User> foundBefore = usersRepository.findByBirthDateIsBefore(dateBefore);
         assertEquals(0, foundBefore.size());
     }
 
     @Test
     public void findByIsAdmin() {
-        assertEquals("login777", usersDAO.findByIsAdmin(false).get(0).getLogin());
-        assertTrue(usersDAO.findByIsAdmin(true).isEmpty());
+        assertEquals("login777", usersRepository.findByIsAdmin(false).get(0).getLogin());
+        assertTrue(usersRepository.findByIsAdmin(true).isEmpty());
     }
 }

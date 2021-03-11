@@ -3,8 +3,7 @@ package org.level.web;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.levelp.model.Part;
-import org.levelp.model.PartsDAO;
-import org.mockito.Mock;
+import org.levelp.model.PartsRepository;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -29,7 +28,7 @@ public class AddFormControllerTest {
     private MockMvc mvc;
 
     @MockBean
-    private PartsDAO parts;
+    private PartsRepository parts;
 
     @MockBean
     private EntityTransaction tx;

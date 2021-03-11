@@ -1,21 +1,19 @@
 package org.level.web;
 
 import org.levelp.model.Part;
-import org.levelp.model.PartsDAO;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.levelp.model.PartsRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
 @SessionAttributes("user-session")
 public class StartPageController {
-    private final PartsDAO parts;
+    private final PartsRepository parts;
 
-    public StartPageController(PartsDAO parts) {
+    public StartPageController(PartsRepository parts) {
         this.parts = parts;
     }
 

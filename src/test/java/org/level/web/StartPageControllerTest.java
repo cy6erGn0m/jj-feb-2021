@@ -3,25 +3,19 @@ package org.level.web;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.levelp.model.Part;
-import org.levelp.model.PartsDAO;
+import org.levelp.model.PartsRepository;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-import ru.levelp.TestConfiguration;
 
-import javax.persistence.EntityManager;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import static org.junit.Assert.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -34,7 +28,7 @@ public class StartPageControllerTest {
     private MockMvc mvc;
 
     @MockBean
-    private PartsDAO parts;
+    private PartsRepository parts;
 
     @Test
     public void testNoParts() throws Exception {
