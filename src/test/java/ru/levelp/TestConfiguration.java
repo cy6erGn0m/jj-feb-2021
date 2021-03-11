@@ -1,6 +1,7 @@
 package ru.levelp;
 
 import org.level.web.AppJPAConfiguration;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
 import org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration;
 import org.springframework.context.annotation.*;
@@ -17,6 +18,7 @@ import javax.persistence.Persistence;
 })
 @EnableJpaRepositories(basePackages = "org.levelp.model")
 @EnableTransactionManagement
+@EnableAutoConfiguration
 public class TestConfiguration {
     @Bean
     public EntityManagerFactory entityManagerFactory() {

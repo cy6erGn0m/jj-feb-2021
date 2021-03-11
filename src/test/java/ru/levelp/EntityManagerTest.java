@@ -1,6 +1,7 @@
 package ru.levelp;
 
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.levelp.model.Part;
@@ -16,6 +17,7 @@ import javax.persistence.EntityManager;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = TestConfiguration.class)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
+@Ignore
 public class EntityManagerTest {
     @Autowired
     private EntityManager manager;

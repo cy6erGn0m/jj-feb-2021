@@ -8,7 +8,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.transaction.annotation.Transactional;
 import ru.levelp.TestConfiguration;
 
 import java.util.Date;
@@ -55,12 +54,12 @@ public class UsersRepositoryTest {
 
     @Test
     public void findByBirthDate() {
-        List<User> foundByNow = usersRepository.findByBirthDateIsBefore(now);
+        List<User> foundByNow = usersRepository.findByBirthDateIsLessThanEqual(now);
         assertEquals(1, foundByNow.size());
         assertEquals("login777", foundByNow.get(0).getLogin());
 
         Date dateBefore = new Date(now.getTime() - 100000000);
-        List<User> foundBefore = usersRepository.findByBirthDateIsBefore(dateBefore);
+        List<User> foundBefore = usersRepository.findByBirthDateIsLessThanEqual(dateBefore);
         assertEquals(0, foundBefore.size());
     }
 

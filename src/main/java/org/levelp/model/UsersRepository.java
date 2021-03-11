@@ -13,7 +13,7 @@ public interface UsersRepository extends JpaRepository<User, Integer> {
 
     public User findByLoginAndPassword(String login, String password);
 
-    public List<User> findByBirthDateIsBefore(Date referenceDate);
+    public List<User> findByBirthDateIsLessThanEqual(Date referenceDate);
 
     @Query(name = "findByIsAdmin")
     public List<User> findByIsAdmin(boolean isAdmin);

@@ -11,6 +11,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import ru.levelp.TestConfiguration;
 
@@ -23,22 +24,23 @@ import static org.junit.Assert.assertTrue;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = TestConfiguration.class)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
-@Transactional
 @SpringBootTest
+@Transactional
 public class PartsRepositoryTest {
-    @PersistenceContext
-    private EntityManager manager;
-
     @Autowired
     private PartsRepository partsRepository;
 
+    @Autowired
+    private StorageRepository storageRepository;
+
     @Before
+    @Transactional
     public void configure() {
         Storage newStorage = new Storage("test-storage");
         Part newPart = new Part("111", "My part");
         newPart.setStorage(newStorage);
 
-        manager.persist(newStorage);
+        storageRepository.save(newStorage);
         partsRepository.save(newPart);
     }
 
@@ -51,18 +53,18 @@ public class PartsRepositoryTest {
     @Test
     public void findByStorageTitleWithPaging() {
         Page<Part> page = partsRepository.findByStorageTitlePaging("test-storage",
-                PageRequest.of(1, 100)
+                PageRequest.of(0, 100)
         );
 
-        PageRequest.of(1, 100, Sort.Direction.ASC, "title");
-        PageRequest.of(1, 100,
+        PageRequest.of(0, 100, Sort.Direction.ASC, "title");
+        PageRequest.of(0, 100,
                 Sort.by(Sort.Direction.ASC, "title").
                         and(Sort.by(Sort.Direction.DESC, "partNumber"))
         );
 
         assertEquals(1, page.getTotalPages());
         assertEquals(1, page.getTotalElements());
-        Part singlePart = page.stream().findFirst().get();
+        Part singlePart = page.getContent().get(0);
 
         assertEquals("My part", singlePart.getTitle());
     }
@@ -86,6 +88,6 @@ public class PartsRepositoryTest {
     public void saveNewPart() {
         Part added = partsRepository.saveNewPart("part-1", "First part");
 
-        manager.refresh(added);
+        assertTrue(partsRepository.findById(added.getId()).isPresent());
     }
 }
