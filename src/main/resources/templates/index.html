@@ -16,6 +16,13 @@
         <!--    <a href="/register">Register</a>-->
     </div>
 
+    <div th:if="${isLoggedIn}">
+        <form action="/user/logout" method="post">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+            <input type="submit" class="btn btn-link" value="Logout">
+        </form>
+    </div>
+
     <table class="table table-striped">
         <tbody th:if="${not parts.isEmpty()}">
         <th:block th:each="part : ${parts}">

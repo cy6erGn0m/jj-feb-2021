@@ -21,6 +21,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/", "/login").permitAll()
                 .antMatchers(HttpMethod.GET, "/**/*.js", "/**/*.css").permitAll()
                 .antMatchers("/admin/**").hasRole("ADMIN")
+                .antMatchers("/user/**").hasRole("USER")
                 .anyRequest().denyAll();
 
         http.formLogin()
@@ -28,6 +29,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginProcessingUrl("/login")
                 .usernameParameter("userName")
                 .passwordParameter("password")
+                .permitAll();
+
+        http.logout()
+                .logoutUrl("/user/logout")
+                .logoutSuccessUrl("/")
                 .permitAll();
     }
 
