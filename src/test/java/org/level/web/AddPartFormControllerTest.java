@@ -23,7 +23,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes = TestWebConfiguration.class)
 @AutoConfigureMockMvc
-public class AddFormControllerTest {
+public class AddPartFormControllerTest {
     @Autowired
     private MockMvc mvc;
 

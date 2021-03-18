@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <body>
-<form action="/add" method="post" th:object="${partForm}">
+<form action="/admin/parts/add" method="post" th:object="${partForm}">
     <p>
         <label>
             Part number:
@@ -20,6 +20,12 @@
         <span th:if="${#fields.hasErrors('partTitle')}"
               th:errors="*{partTitle}"></span>
     </p>
+
+    <input type="hidden"
+           th:name="${_csrf.parameterName}"
+           th:value="${_csrf.token}"
+    />
+
     <p>
         <input type="submit">
     </p>

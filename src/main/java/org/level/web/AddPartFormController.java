@@ -13,11 +13,11 @@ import javax.validation.Valid;
 
 @Controller
 @SessionAttributes("user-session")
-public class AddFormController {
+public class AddPartFormController {
     @Autowired
     private PartsRepository parts;
 
-    @GetMapping("/add")
+    @GetMapping("/admin/parts/add")
     public String viewAddForm(
             Model model,
             @ModelAttribute("partForm") AddPartForm partForm,
@@ -25,17 +25,12 @@ public class AddFormController {
         return "addPart";
     }
 
-    @PostMapping("/add")
+    @PostMapping("/admin/parts/add")
     public String add(
             Model model,
             @Valid @ModelAttribute("partForm") AddPartForm partForm,
-            @ModelAttribute("user-session") UserSession session,
             BindingResult bindingResult
     ) {
-        if (session.getUserLogin() == null || !session.isAdmin()) {
-            throw new RuntimeException("User is not admin");
-        }
-
         if (bindingResult.hasErrors()) {
             return "addPart";
         }
