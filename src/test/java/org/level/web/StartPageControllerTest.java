@@ -16,6 +16,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -42,11 +43,7 @@ public class StartPageControllerTest {
 
     @Test
     public void testNoPartsWithLoggedInAdmin() throws Exception {
-        UserSession userSession = new UserSession();
-        userSession.setUserLogin("admin");
-        userSession.setAdmin(true);
-
-        mvc.perform(get("/").sessionAttr("user-session", userSession))
+        mvc.perform(get("/").with(user("admin").roles("ADMIN")))
                 .andExpect(status().isOk())
                 .andExpect(model().attribute("title", "Hello, admin!"))
                 .andExpect(model().attribute("parts", Collections.emptyList()))

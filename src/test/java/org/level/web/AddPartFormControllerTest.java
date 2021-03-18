@@ -16,6 +16,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
 import static org.mockito.ArgumentMatchers.matches;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -43,14 +45,11 @@ public class AddPartFormControllerTest {
         Mockito.when(parts.saveNewPart(matches("part-111"), matches("Part 1")))
                 .thenReturn(added);
 
-        UserSession userSession = new UserSession();
-        userSession.setUserLogin("admin");
-        userSession.setAdmin(true);
-
-        mvc.perform(post("/add")
+        mvc.perform(post("/admin/parts/add")
+                .with(user("admin").roles("ADMIN"))
                 .param("partNumber", "part-111")
                 .param("partTitle", "Part 1")
-                .sessionAttr("user-session", userSession)
+                .with(csrf())
         )
                 .andExpect(status().isOk())
                 .andExpect(model().attribute("itemName", "Part 1"));
