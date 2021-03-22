@@ -3,6 +3,7 @@ package org.level.web;
 import org.levelp.model.Part;
 import org.levelp.model.PartsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -37,7 +38,7 @@ public class AddPartFormController {
 
         Part added;
         try {
-            added = parts.saveNewPart(partForm.getPartNumber(), partForm.getPartTitle());
+            added = createPart(partForm);
         } catch (Throwable constraint) {
             bindingResult.addError(new FieldError("form", "partNumber", "partNumber is already used"));
             return "addPart";
@@ -45,5 +46,12 @@ public class AddPartFormController {
 
         model.addAttribute("itemName", added.getTitle());
         return "added";
+    }
+
+    @Secured("ADMIN")
+    private Part createPart(AddPartForm partForm) {
+        Part added;
+        added = parts.saveNewPart(partForm.getPartNumber(), partForm.getPartTitle());
+        return added;
     }
 }
