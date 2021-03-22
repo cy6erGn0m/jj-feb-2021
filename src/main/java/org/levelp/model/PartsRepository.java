@@ -22,6 +22,12 @@ public interface PartsRepository extends JpaRepository<Part, Integer> {
     @Query("from Part part where part.storage.title = :title")
     public List<Part> findByStorageTitle(@Param("title") String title);
 
+    @Query("from Part part where part.storage.id = :storageId")
+    public Page<Part> findByStorageId(
+            @Param("storageId") int storageId,
+            Pageable page
+    );
+
     @Query("from Part part where part.storage.title = :title")
     public Page<Part> findByStorageTitlePaging(
             @Param("title") String title,
