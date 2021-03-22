@@ -1,5 +1,7 @@
 package org.levelp.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -17,6 +19,7 @@ public class User {
     private String login;
 
     @Column(nullable = false, length = 50)
+    @JsonIgnore
     private String password;
 
     @Column(nullable = false)

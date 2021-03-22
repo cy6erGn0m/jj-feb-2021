@@ -1,5 +1,7 @@
 package org.levelp.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.List;
@@ -16,6 +18,7 @@ public class Storage {
     private String title;
 
     @OneToMany(mappedBy = "storage")
+    @JsonIgnore
     private List<Part> parts;
 
     public Storage() {
