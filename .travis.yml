@@ -1,3 +1,9 @@
 language: java
 jdk:
   - oraclejdk11
+addons:
+  sonarcloud:
+    organization: "cy6ergn0m-jj-feb-21"
+script:
+  # other script steps might be done before running the actual analysis
+  - sonar-scanner
