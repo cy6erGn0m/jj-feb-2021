@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @Controller
-@SessionAttributes("user-session")
 public class AddPartFormController {
     @Autowired
     private PartsRepository parts;
