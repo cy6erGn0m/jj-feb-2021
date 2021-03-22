@@ -5,5 +5,4 @@ addons:
   sonarcloud:
     organization: "cy6ergn0m-jj-feb-21"
 script:
-  # other script steps might be done before running the actual analysis
-  - sonar-scanner
+  - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -Dsonar.projectKey=cy6erGn0m_jj-feb-2021
