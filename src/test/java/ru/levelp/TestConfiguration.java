@@ -2,15 +2,12 @@ package ru.levelp;
 
 import org.level.web.AppJPAConfiguration;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
-import org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration;
-import org.springframework.context.annotation.*;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.FilterType;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 
 @Configuration
 @ComponentScan(basePackages = "org.levelp.model", excludeFilters = {
@@ -19,9 +16,6 @@ import javax.persistence.Persistence;
 @EnableJpaRepositories(basePackages = "org.levelp.model")
 @EnableTransactionManagement
 @EnableAutoConfiguration
+@EntityScan("org.levelp.model")
 public class TestConfiguration {
-    @Bean
-    public EntityManagerFactory entityManagerFactory() {
-        return Persistence.createEntityManagerFactory("TestPersistenceUnit");
-    }
 }
